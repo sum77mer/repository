@@ -3,6 +3,10 @@
 //
 
 #pragma once
+#include "afxwin.h"
+#include "afxcmn.h"
+#include"DetectDlg.h"
+#include"SendDlg.h"
 
 
 // CautodetectDlg ¶Ô»°¿ò
@@ -31,4 +35,10 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
+public:
+	CTabCtrl m_tab;
+	CDetectDlg m_DetectDlg;
+	CSendDlg m_SendDlg;
+	afx_msg void OnTcnSelchangeTab2(NMHDR *pNMHDR, LRESULT *pResult);
 };

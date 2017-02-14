@@ -49,6 +49,8 @@ END_MESSAGE_MAP()
 
 
 
+
+
 CautodetectDlg::CautodetectDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_AUTODETECT_DIALOG, pParent)
 {
@@ -58,12 +60,14 @@ CautodetectDlg::CautodetectDlg(CWnd* pParent /*=NULL*/)
 void CautodetectDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_TAB2, m_tab);
 }
 
 BEGIN_MESSAGE_MAP(CautodetectDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB2, &CautodetectDlg::OnTcnSelchangeTab2)
 END_MESSAGE_MAP()
 
 
@@ -99,7 +103,23 @@ BOOL CautodetectDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	CRect tabRect;   // 标签控件客户区的位置和大小   
 
+	m_tab.InsertItem(0, _T("Detect"));         // 插入第一个标签“鸡啄米”   
+	m_tab.InsertItem(1, _T("Send"));  // 插入第二个标签“Android开发网”   
+	m_DetectDlg.Create(IDD_DIALOG_DETECT, &m_tab);    // 创建第一个标签页   
+	m_SendDlg.Create(IDD_DIALOG_SEND, &m_tab); // 创建第二个标签页   
+
+	m_tab.GetClientRect(&tabRect);    // 获取标签控件客户区Rect   
+									  // 调整tabRect，使其覆盖范围适合放置标签页   
+	tabRect.left += 1;
+	tabRect.right -= 1;
+	tabRect.top += 25;
+	tabRect.bottom -= 1;
+	// 根据调整好的tabRect放置m_jzmDlg子对话框，并设置为显示   
+	m_DetectDlg.SetWindowPos(NULL, tabRect.left, tabRect.top, tabRect.Width(), tabRect.Height(), SWP_SHOWWINDOW);
+	// 根据调整好的tabRect放置m_androidDlg子对话框，并设置为隐藏   
+	m_SendDlg.SetWindowPos(NULL, tabRect.left, tabRect.top, tabRect.Width(), tabRect.Height(), SWP_HIDEWINDOW);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -152,3 +172,33 @@ HCURSOR CautodetectDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+void CautodetectDlg::OnTcnSelchangeTab2(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	*pResult = 0;
+	CRect tabRect;    // 标签控件客户区的Rect   
+
+					  // 获取标签控件客户区Rect，并对其调整，以适合放置标签页   
+	m_tab.GetClientRect(&tabRect);
+	tabRect.left += 1;
+	tabRect.right -= 1;
+	tabRect.top += 25;
+	tabRect.bottom -= 1;
+
+	switch (m_tab.GetCurSel())
+	{
+		// 如果标签控件当前选择标签为“鸡啄米”，则显示m_jzmDlg对话框，隐藏m_androidDlg对话框   
+	case 0:
+		m_DetectDlg.SetWindowPos(NULL, tabRect.left, tabRect.top, tabRect.Width(), tabRect.Height(), SWP_SHOWWINDOW);
+		m_SendDlg.SetWindowPos(NULL, tabRect.left, tabRect.top, tabRect.Width(), tabRect.Height(), SWP_HIDEWINDOW);
+		break;
+		// 如果标签控件当前选择标签为“Android开发网”，则隐藏m_jzmDlg对话框，显示m_androidDlg对话框   
+	case 1:
+		m_DetectDlg.SetWindowPos(NULL, tabRect.left, tabRect.top, tabRect.Width(), tabRect.Height(), SWP_HIDEWINDOW);
+		m_SendDlg.SetWindowPos(NULL, tabRect.left, tabRect.top, tabRect.Width(), tabRect.Height(), SWP_SHOWWINDOW);
+		break;
+	default:
+		break;
+	}
+}

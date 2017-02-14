@@ -114,9 +114,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\VC代码\autodetect\autodetect;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>WinRing0x64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\VC代码\autodetect\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -164,11 +167,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\VC代码\autodetect\autodetect;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>WinRing0x64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\VC代码\autodetect\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -187,13 +193,21 @@
   <ItemGroup>
     <ClInclude Include="autodetect.h" />
     <ClInclude Include="autodetectDlg.h" />
+    <ClInclude Include="DetectDlg.h" />
+    <ClInclude Include="GetSysInfo.h" />
+    <ClInclude Include="PCI.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SendDlg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="autodetect.cpp" />
     <ClCompile Include="autodetectDlg.cpp" />
+    <ClCompile Include="DetectDlg.cpp" />
+    <ClCompile Include="GetSysInfo.cpp" />
+    <ClCompile Include="PCI.cpp" />
+    <ClCompile Include="SendDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -205,6 +219,8 @@
     <ResourceCompile Include="autodetect.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="res\autodetect.rc2" />
   </ItemGroup>
   <ItemGroup>
@@ -213,4 +229,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="autodetect.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
